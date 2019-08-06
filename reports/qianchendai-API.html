@@ -1,0 +1,2276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>前程贷测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.8.2.2"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://libs.baidu.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+<style type="text/css" media="screen">
+body        { font-family: Microsoft YaHei,Tahoma,arial,helvetica,sans-serif;padding: 20px; font-size: 120%; }
+table       { font-size: 100%; }
+/* -- heading ---------------------------------------------------------------------- */
+.heading {
+    margin-top: 0ex;
+    margin-bottom: 1ex;
+}
+.heading .description {
+    margin-top: 4ex;
+    margin-bottom: 6ex;
+}
+/* -- report ------------------------------------------------------------------------ */
+#total_row  { font-weight: bold; }
+.passCase   { color: #5cb85c; }
+.failCase   { color: #d9534f; font-weight: bold; }
+.errorCase  { color: #f0ad4e; font-weight: bold; }
+.hiddenRow  { display: none; }
+.testcase   { margin-left: 2em; }
+</style>
+
+</head>
+<body >
+<script language="javascript" type="text/javascript">
+output_list = Array();
+/*level 调整增加只显示通过用例的分类 --Findyou
+0:Summary //all hiddenRow
+1:Failed  //pt hiddenRow, ft none
+2:Pass    //pt none, ft hiddenRow
+3:All     //pt none, ft none
+*/
+function showCase(level) {
+    trs = document.getElementsByTagName("tr");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        id = tr.id;
+        if (id.substr(0,2) == 'ft') {
+            if (level == 2 || level == 0 ) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+        if (id.substr(0,2) == 'pt') {
+            if (level < 2) {
+                tr.className = 'hiddenRow';
+            }
+            else {
+                tr.className = '';
+            }
+        }
+    }
+    //加入【详细】切换文字变化 --Findyou
+    detail_class=document.getElementsByClassName('detail');
+	//console.log(detail_class.length)
+	if (level == 3) {
+		for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="收起"
+		}
+	}
+	else{
+			for (var i = 0; i < detail_class.length; i++){
+			detail_class[i].innerHTML="详细"
+		}
+	}
+}
+function showClassDetail(cid, count) {
+    var id_list = Array(count);
+    var toHide = 1;
+    for (var i = 0; i < count; i++) {
+        //ID修改 点 为 下划线 -Findyou
+        tid0 = 't' + cid.substr(1) + '_' + (i+1);
+        tid = 'f' + tid0;
+        tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'p' + tid0;
+            tr = document.getElementById(tid);
+        }
+        id_list[i] = tid;
+        if (tr.className) {
+            toHide = 0;
+        }
+    }
+    for (var i = 0; i < count; i++) {
+        tid = id_list[i];
+        //修改点击无法收起的BUG，加入【详细】切换文字变化 --Findyou
+        if (toHide) {
+            document.getElementById(tid).className = 'hiddenRow';
+            document.getElementById(cid).innerText = "详细"
+        }
+        else {
+            document.getElementById(tid).className = '';
+            document.getElementById(cid).innerText = "收起"
+        }
+    }
+}
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+</script>
+<div class='heading'>
+<h1 style="font-family: Microsoft YaHei">前程贷测试报告</h1>
+<p class='attribute'><strong>测试人员 : </strong> xiaochen</p>
+<p class='attribute'><strong>开始时间 : </strong> 2019-08-06 23:42:35</p>
+<p class='attribute'><strong>合计耗时 : </strong> 0:00:09.609617</p>
+<p class='attribute'><strong>测试结果 : </strong> 共 96，通过 92，失败 3，错误 1，通过率= 95.83%</p>
+
+<p class='description'>2019.2.23测试报告</p>
+</div>
+
+
+<p id='show_detail_line'>
+<a class="btn btn-primary" href='javascript:showCase(0)'>概要{ 95.83% }</a>
+<a class="btn btn-danger" href='javascript:showCase(1)'>失败{ 3 }</a>
+<a class="btn btn-success" href='javascript:showCase(2)'>通过{ 92 }</a>
+<a class="btn btn-info" href='javascript:showCase(3)'>所有{ 96 }</a>
+</p>
+<table id='result_table' class="table table-condensed table-bordered table-hover">
+<colgroup>
+<col align='left' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+<col align='right' />
+</colgroup>
+<tr id='header_row' class="text-center success" style="font-weight: bold;font-size: 16px;">
+    <td>用例集/测试用例</td>
+    <td>总计</td>
+    <td>通过</td>
+    <td>失败</td>
+    <td>错误</td>
+    <td>详细</td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_add.AddTest</td>
+    <td class="text-center">24</td>
+    <td class="text-center">24</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c1',24)" class="detail" id='c1'>详细</a></td>
+</tr>
+
+<tr id='pt1_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_01_输入正确的手机号_密码: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_1'>通过</button>
+    <div id='div_pt1_1' class="collapse in" align="left">
+    <pre>
+    
+pt1_1: 2019-08-06 23:42:35,120-INFO-test_add.py-add-27[日志信息]:开始执行1条用例了,用例标题是:输入正确的手机号,密码
+响应的结果:{'msg': '登录成功', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:35,214-ERROR-test_add.py-add-33[日志信息]:第1条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_02_借款人ID为空: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_2'>通过</button>
+    <div id='div_pt1_2' class="collapse in" align="left">
+    <pre>
+    
+pt1_2: 2019-08-06 23:42:35,229-INFO-test_add.py-add-27[日志信息]:开始执行2条用例了,用例标题是:借款人ID为空
+响应的结果:{'msg': '所有参数不能为空', 'status': 0, 'data': None, 'code': '20103'}
+2019-08-06 23:42:35,260-ERROR-test_add.py-add-33[日志信息]:第2条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_03_借款人ID为负数: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_3'>通过</button>
+    <div id='div_pt1_3' class="collapse in" align="left">
+    <pre>
+    
+pt1_3: 2019-08-06 23:42:35,260-INFO-test_add.py-add-27[日志信息]:开始执行3条用例了,用例标题是:借款人ID为负数
+响应的结果:{'msg': '参数错误：用户ID memberId必须是正整数', 'status': 0, 'data': None, 'code': '20104'}
+2019-08-06 23:42:35,292-ERROR-test_add.py-add-33[日志信息]:第3条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_04_借款人ID不存在: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_4'>通过</button>
+    <div id='div_pt1_4' class="collapse in" align="left">
+    <pre>
+    
+pt1_4: 2019-08-06 23:42:35,292-INFO-test_add.py-add-27[日志信息]:开始执行4条用例了,用例标题是:借款人ID不存在
+响应的结果:{'msg': '不存在该会员', 'status': 0, 'data': None, 'code': '20105'}
+2019-08-06 23:42:35,307-ERROR-test_add.py-add-33[日志信息]:第4条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_05_借款人ID为非数字: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_5'>通过</button>
+    <div id='div_pt1_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_5'>通过</button>
+    <div id='div_pt1_5' class="collapse in" align="left">
+    <pre>
+    
+pt1_5: 2019-08-06 23:42:35,307-INFO-test_add.py-add-27[日志信息]:开始执行5条用例了,用例标题是:借款人ID为非数字
+响应的结果:{'msg': '请根据数值参数的类型对应输入合法的数字', 'status': 0, 'data': None, 'code': '20109'}
+2019-08-06 23:42:35,338-ERROR-test_add.py-add-33[日志信息]:第5条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_6' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_06_借款标题为空: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_6'>通过</button>
+    <div id='div_pt1_6' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_6'>通过</button>
+    <div id='div_pt1_6' class="collapse in" align="left">
+    <pre>
+    
+pt1_6: 2019-08-06 23:42:35,338-INFO-test_add.py-add-27[日志信息]:开始执行6条用例了,用例标题是:借款标题为空
+响应的结果:{'msg': '所有参数不能为空', 'status': 0, 'data': None, 'code': '20103'}
+2019-08-06 23:42:35,354-ERROR-test_add.py-add-33[日志信息]:第6条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_07_借款金额为空: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_7'>通过</button>
+    <div id='div_pt1_7' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_7'>通过</button>
+    <div id='div_pt1_7' class="collapse in" align="left">
+    <pre>
+    
+pt1_7: 2019-08-06 23:42:35,370-INFO-test_add.py-add-27[日志信息]:开始执行7条用例了,用例标题是:借款金额为空
+响应的结果:{'msg': '所有参数不能为空', 'status': 0, 'data': None, 'code': '20103'}
+2019-08-06 23:42:35,401-ERROR-test_add.py-add-33[日志信息]:第7条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_8' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_08_借款金额为负数: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_8'>通过</button>
+    <div id='div_pt1_8' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_8'>通过</button>
+    <div id='div_pt1_8' class="collapse in" align="left">
+    <pre>
+    
+pt1_8: 2019-08-06 23:42:35,401-INFO-test_add.py-add-27[日志信息]:开始执行8条用例了,用例标题是:借款金额为负数
+响应的结果:{'msg': '不存在该会员', 'status': 0, 'data': None, 'code': '20105'}
+2019-08-06 23:42:35,416-ERROR-test_add.py-add-33[日志信息]:第8条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_9' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_09_借款金额小于1000: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_9' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_9'>通过</button>
+    <div id='div_pt1_9' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_9' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_9'>通过</button>
+    <div id='div_pt1_9' class="collapse in" align="left">
+    <pre>
+    
+pt1_9: 2019-08-06 23:42:35,416-INFO-test_add.py-add-27[日志信息]:开始执行9条用例了,用例标题是:借款金额小于1000
+响应的结果:{'msg': '不存在该会员', 'status': 0, 'data': None, 'code': '20105'}
+2019-08-06 23:42:35,448-ERROR-test_add.py-add-33[日志信息]:第9条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_10' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_10_借款金额为非数字: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_10' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_10'>通过</button>
+    <div id='div_pt1_10' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_10' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_10'>通过</button>
+    <div id='div_pt1_10' class="collapse in" align="left">
+    <pre>
+    
+pt1_10: 2019-08-06 23:42:35,448-INFO-test_add.py-add-27[日志信息]:开始执行10条用例了,用例标题是:借款金额为非数字
+响应的结果:{'msg': '请根据数值参数的类型对应输入合法的数字', 'status': 0, 'data': None, 'code': '20109'}
+2019-08-06 23:42:35,463-ERROR-test_add.py-add-33[日志信息]:第10条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_11' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_11_年利率为空: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_11' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_11'>通过</button>
+    <div id='div_pt1_11' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_11' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_11'>通过</button>
+    <div id='div_pt1_11' class="collapse in" align="left">
+    <pre>
+    
+pt1_11: 2019-08-06 23:42:35,463-INFO-test_add.py-add-27[日志信息]:开始执行11条用例了,用例标题是:年利率为空
+响应的结果:{'msg': '所有参数不能为空', 'status': 0, 'data': None, 'code': '20103'}
+2019-08-06 23:42:35,479-ERROR-test_add.py-add-33[日志信息]:第11条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_12' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_12_年利率为负数: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_12' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_12'>通过</button>
+    <div id='div_pt1_12' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_12' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_12'>通过</button>
+    <div id='div_pt1_12' class="collapse in" align="left">
+    <pre>
+    
+pt1_12: 2019-08-06 23:42:35,479-INFO-test_add.py-add-27[日志信息]:开始执行12条用例了,用例标题是:年利率为负数
+响应的结果:{'msg': '不存在该会员', 'status': 0, 'data': None, 'code': '20105'}
+2019-08-06 23:42:35,510-ERROR-test_add.py-add-33[日志信息]:第12条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_13' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_13_年利率大于24: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_13' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_13'>通过</button>
+    <div id='div_pt1_13' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_13' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_13'>通过</button>
+    <div id='div_pt1_13' class="collapse in" align="left">
+    <pre>
+    
+pt1_13: 2019-08-06 23:42:35,510-INFO-test_add.py-add-27[日志信息]:开始执行13条用例了,用例标题是:年利率大于24
+响应的结果:{'msg': '不存在该会员', 'status': 0, 'data': None, 'code': '20105'}
+2019-08-06 23:42:35,526-ERROR-test_add.py-add-33[日志信息]:第13条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_14' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_14_年利率为非数字: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_14' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_14'>通过</button>
+    <div id='div_pt1_14' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_14' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_14'>通过</button>
+    <div id='div_pt1_14' class="collapse in" align="left">
+    <pre>
+    
+pt1_14: 2019-08-06 23:42:35,526-INFO-test_add.py-add-27[日志信息]:开始执行14条用例了,用例标题是:年利率为非数字
+响应的结果:{'msg': '请根据数值参数的类型对应输入合法的数字', 'status': 0, 'data': None, 'code': '20109'}
+2019-08-06 23:42:35,541-ERROR-test_add.py-add-33[日志信息]:第14条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_15' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_15_借款期限为空: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_15' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_15'>通过</button>
+    <div id='div_pt1_15' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_15' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_15'>通过</button>
+    <div id='div_pt1_15' class="collapse in" align="left">
+    <pre>
+    
+pt1_15: 2019-08-06 23:42:35,541-INFO-test_add.py-add-27[日志信息]:开始执行15条用例了,用例标题是:借款期限为空
+响应的结果:{'msg': '所有参数不能为空', 'status': 0, 'data': None, 'code': '20103'}
+2019-08-06 23:42:35,572-ERROR-test_add.py-add-33[日志信息]:第15条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_16' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_16_借款期限为非数字: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_16' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_16'>通过</button>
+    <div id='div_pt1_16' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_16' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_16'>通过</button>
+    <div id='div_pt1_16' class="collapse in" align="left">
+    <pre>
+    
+pt1_16: 2019-08-06 23:42:35,572-INFO-test_add.py-add-27[日志信息]:开始执行16条用例了,用例标题是:借款期限为非数字
+响应的结果:{'msg': '请根据数值参数的类型对应输入合法的数字', 'status': 0, 'data': None, 'code': '20109'}
+2019-08-06 23:42:35,604-ERROR-test_add.py-add-33[日志信息]:第16条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_17' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_17_借款期限类型为空: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_17' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_17'>通过</button>
+    <div id='div_pt1_17' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_17' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_17'>通过</button>
+    <div id='div_pt1_17' class="collapse in" align="left">
+    <pre>
+    
+pt1_17: 2019-08-06 23:42:35,604-INFO-test_add.py-add-27[日志信息]:开始执行17条用例了,用例标题是:借款期限类型为空
+响应的结果:{'msg': '所有参数不能为空', 'status': 0, 'data': None, 'code': '20103'}
+2019-08-06 23:42:35,619-ERROR-test_add.py-add-33[日志信息]:第17条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_18' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_18_借款期限类型除了0_2_4其他类型: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_18' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_18'>通过</button>
+    <div id='div_pt1_18' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_18' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_18'>通过</button>
+    <div id='div_pt1_18' class="collapse in" align="left">
+    <pre>
+    
+pt1_18: 2019-08-06 23:42:35,619-INFO-test_add.py-add-27[日志信息]:开始执行18条用例了,用例标题是:借款期限类型除了0,2,4其他类型
+响应的结果:{'msg': '不存在该会员', 'status': 0, 'data': None, 'code': '20105'}
+2019-08-06 23:42:35,635-ERROR-test_add.py-add-33[日志信息]:第18条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_19' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_19_借款期限类型为非数字: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_19' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_19'>通过</button>
+    <div id='div_pt1_19' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_19' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_19'>通过</button>
+    <div id='div_pt1_19' class="collapse in" align="left">
+    <pre>
+    
+pt1_19: 2019-08-06 23:42:35,635-INFO-test_add.py-add-27[日志信息]:开始执行19条用例了,用例标题是:借款期限类型为非数字
+响应的结果:{'msg': '请根据数值参数的类型对应输入合法的数字', 'status': 0, 'data': None, 'code': '20109'}
+2019-08-06 23:42:35,666-ERROR-test_add.py-add-33[日志信息]:第19条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_20' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_20_还款方式为空: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_20' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_20'>通过</button>
+    <div id='div_pt1_20' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_20' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_20'>通过</button>
+    <div id='div_pt1_20' class="collapse in" align="left">
+    <pre>
+    
+pt1_20: 2019-08-06 23:42:35,666-INFO-test_add.py-add-27[日志信息]:开始执行20条用例了,用例标题是:还款方式为空
+响应的结果:{'msg': '所有参数不能为空', 'status': 0, 'data': None, 'code': '20103'}
+2019-08-06 23:42:35,682-ERROR-test_add.py-add-33[日志信息]:第20条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_21' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_21_还款方式为非数字: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_21' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_21'>通过</button>
+    <div id='div_pt1_21' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_21' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_21'>通过</button>
+    <div id='div_pt1_21' class="collapse in" align="left">
+    <pre>
+    
+pt1_21: 2019-08-06 23:42:35,682-INFO-test_add.py-add-27[日志信息]:开始执行21条用例了,用例标题是:还款方式为非数字
+响应的结果:{'msg': '请根据数值参数的类型对应输入合法的数字', 'status': 0, 'data': None, 'code': '20109'}
+2019-08-06 23:42:35,697-ERROR-test_add.py-add-33[日志信息]:第21条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_22' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_22_竞标天数为空: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_22' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_22'>通过</button>
+    <div id='div_pt1_22' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_22' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_22'>通过</button>
+    <div id='div_pt1_22' class="collapse in" align="left">
+    <pre>
+    
+pt1_22: 2019-08-06 23:42:35,697-INFO-test_add.py-add-27[日志信息]:开始执行22条用例了,用例标题是:竞标天数为空
+响应的结果:{'msg': '所有参数不能为空', 'status': 0, 'data': None, 'code': '20103'}
+2019-08-06 23:42:35,713-ERROR-test_add.py-add-33[日志信息]:第22条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_23' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_23_竞标天数为非数字: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_23' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_23'>通过</button>
+    <div id='div_pt1_23' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_23' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_23'>通过</button>
+    <div id='div_pt1_23' class="collapse in" align="left">
+    <pre>
+    
+pt1_23: 2019-08-06 23:42:35,713-INFO-test_add.py-add-27[日志信息]:开始执行23条用例了,用例标题是:竞标天数为非数字
+响应的结果:{'msg': '请根据数值参数的类型对应输入合法的数字', 'status': 0, 'data': None, 'code': '20109'}
+2019-08-06 23:42:35,728-ERROR-test_add.py-add-33[日志信息]:第23条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt1_24' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_add_24_输入正确的参数: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt1_24' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt1_24'>通过</button>
+    <div id='div_pt1_24' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt1_24' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt1_24'>通过</button>
+    <div id='div_pt1_24' class="collapse in" align="left">
+    <pre>
+    
+pt1_24: 2019-08-06 23:42:35,728-INFO-test_add.py-add-27[日志信息]:开始执行24条用例了,用例标题是:输入正确的参数
+响应的结果:{'msg': '不存在该会员', 'status': 0, 'data': None, 'code': '20105'}
+2019-08-06 23:42:35,744-ERROR-test_add.py-add-33[日志信息]:第24条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_audit.AuditTest</td>
+    <td class="text-center">56</td>
+    <td class="text-center">56</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c2',56)" class="detail" id='c2'>详细</a></td>
+</tr>
+
+<tr id='pt2_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_01_输入正确的手机号_密码: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_1'>通过</button>
+    <div id='div_pt2_1' class="collapse in" align="left">
+    <pre>
+    
+pt2_1: 2019-08-06 23:42:35,760-INFO-test_audit.py-audit-26[日志信息]:执行第1条用例,用例标题是:输入正确的手机号,密码
+响应的结果:{'msg': '登录成功', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:35,916-ERROR-test_audit.py-audit-34[日志信息]:第1条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_02_标ID为空: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+    <div id='div_pt2_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_2'>通过</button>
+    <div id='div_pt2_2' class="collapse in" align="left">
+    <pre>
+    
+pt2_2: 2019-08-06 23:42:35,916-INFO-test_audit.py-audit-26[日志信息]:执行第2条用例,用例标题是:标ID为空
+响应的结果:{'msg': '参数错误：所有参数不能为空', 'status': 0, 'data': None, 'code': '20203'}
+2019-08-06 23:42:36,040-ERROR-test_audit.py-audit-34[日志信息]:第2条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_03_错误的标ID: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_3'>通过</button>
+    <div id='div_pt2_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_3'>通过</button>
+    <div id='div_pt2_3' class="collapse in" align="left">
+    <pre>
+    
+pt2_3: 2019-08-06 23:42:36,040-INFO-test_audit.py-audit-26[日志信息]:执行第3条用例,用例标题是:错误的标ID
+响应的结果:{'msg': '不存在该项目', 'status': 1, 'data': None, 'code': '20206'}
+2019-08-06 23:42:36,134-ERROR-test_audit.py-audit-34[日志信息]:第3条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_04_标ID为负数: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_4'>通过</button>
+    <div id='div_pt2_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_4'>通过</button>
+    <div id='div_pt2_4' class="collapse in" align="left">
+    <pre>
+    
+pt2_4: 2019-08-06 23:42:36,134-INFO-test_audit.py-audit-26[日志信息]:执行第4条用例,用例标题是:标ID为负数
+响应的结果:{'msg': '参数错误：错误的标id值', 'status': 0, 'data': None, 'code': '20204'}
+2019-08-06 23:42:36,228-ERROR-test_audit.py-audit-34[日志信息]:第4条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_05_状态码为空: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_5'>通过</button>
+    <div id='div_pt2_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_5'>通过</button>
+    <div id='div_pt2_5' class="collapse in" align="left">
+    <pre>
+    
+pt2_5: 2019-08-06 23:42:36,228-INFO-test_audit.py-audit-26[日志信息]:执行第5条用例,用例标题是:状态码为空
+响应的结果:{'msg': '参数错误：所有参数不能为空', 'status': 0, 'data': None, 'code': '20203'}
+2019-08-06 23:42:36,321-ERROR-test_audit.py-audit-34[日志信息]:第5条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_6' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_06_状态码为负数: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_6'>通过</button>
+    <div id='div_pt2_6' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_6'>通过</button>
+    <div id='div_pt2_6' class="collapse in" align="left">
+    <pre>
+    
+pt2_6: 2019-08-06 23:42:36,321-INFO-test_audit.py-audit-26[日志信息]:执行第6条用例,用例标题是:状态码为负数
+响应的结果:{'msg': '参数错误：非法status参数，状态值1-11', 'status': 0, 'data': None, 'code': '20205'}
+2019-08-06 23:42:36,462-ERROR-test_audit.py-audit-34[日志信息]:第6条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_07_状态码为0: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_7'>通过</button>
+    <div id='div_pt2_7' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_7'>通过</button>
+    <div id='div_pt2_7' class="collapse in" align="left">
+    <pre>
+    
+pt2_7: 2019-08-06 23:42:36,462-INFO-test_audit.py-audit-26[日志信息]:执行第7条用例,用例标题是:状态码为0
+响应的结果:{'msg': '参数错误：非法status参数，状态值1-11', 'status': 0, 'data': None, 'code': '20205'}
+2019-08-06 23:42:36,602-ERROR-test_audit.py-audit-34[日志信息]:第7条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_8' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_08_状态码大于等于12: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_8'>通过</button>
+    <div id='div_pt2_8' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_8'>通过</button>
+    <div id='div_pt2_8' class="collapse in" align="left">
+    <pre>
+    
+pt2_8: 2019-08-06 23:42:36,602-INFO-test_audit.py-audit-26[日志信息]:执行第8条用例,用例标题是:状态码大于等于12
+响应的结果:{'msg': '参数错误：非法status参数，状态值1-11', 'status': 0, 'data': None, 'code': '20205'}
+2019-08-06 23:42:36,711-ERROR-test_audit.py-audit-34[日志信息]:第8条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_9' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_09_标的状态为审核中_状态码为2: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_9' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_9'>通过</button>
+    <div id='div_pt2_9' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_9' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_9'>通过</button>
+    <div id='div_pt2_9' class="collapse in" align="left">
+    <pre>
+    
+pt2_9: 2019-08-06 23:42:36,711-INFO-test_audit.py-audit-26[日志信息]:执行第9条用例,用例标题是:标的状态为审核中，状态码为2
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为二审(初审中)状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:36,852-ERROR-test_audit.py-audit-34[日志信息]:第9条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_10' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_10_标的状态为审核中_状态码为3: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_10' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_10'>通过</button>
+    <div id='div_pt2_10' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_10' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_10'>通过</button>
+    <div id='div_pt2_10' class="collapse in" align="left">
+    <pre>
+    
+pt2_10: 2019-08-06 23:42:36,852-INFO-test_audit.py-audit-26[日志信息]:执行第10条用例,用例标题是:标的状态为审核中，状态码为3
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为三审(复审中)状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:36,945-ERROR-test_audit.py-audit-34[日志信息]:第10条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_11' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_11_标的状态为审核中_状态码为4: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_11' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_11'>通过</button>
+    <div id='div_pt2_11' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_11' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_11'>通过</button>
+    <div id='div_pt2_11' class="collapse in" align="left">
+    <pre>
+    
+pt2_11: 2019-08-06 23:42:36,945-INFO-test_audit.py-audit-26[日志信息]:执行第11条用例,用例标题是:标的状态为审核中，状态码为4
+响应的结果:{'msg': '更新状态成功：竞标开始，当前标为竞标中状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:37,039-ERROR-test_audit.py-audit-34[日志信息]:第11条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_12' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_12_标的状态为审核中_状态码为5: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_12' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_12'>通过</button>
+    <div id='div_pt2_12' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_12' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_12'>通过</button>
+    <div id='div_pt2_12' class="collapse in" align="left">
+    <pre>
+    
+pt2_12: 2019-08-06 23:42:37,039-INFO-test_audit.py-audit-26[日志信息]:执行第12条用例,用例标题是:标的状态为审核中，状态码为5
+响应的结果:{'msg': '更新状态成功：当前标为核保审批状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:37,148-ERROR-test_audit.py-audit-34[日志信息]:第12条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_13' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_13_标的状态为审核中_状态码为6: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_13' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_13'>通过</button>
+    <div id='div_pt2_13' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_13' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_13'>通过</button>
+    <div id='div_pt2_13' class="collapse in" align="left">
+    <pre>
+    
+pt2_13: 2019-08-06 23:42:37,148-INFO-test_audit.py-audit-26[日志信息]:执行第13条用例,用例标题是:标的状态为审核中，状态码为6
+响应的结果:{'msg': '更新状态成功：当前标为平台终审状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:37,242-ERROR-test_audit.py-audit-34[日志信息]:第13条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_14' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_14_标的状态为审核中_状态码为7: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_14' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_14'>通过</button>
+    <div id='div_pt2_14' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_14' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_14'>通过</button>
+    <div id='div_pt2_14' class="collapse in" align="left">
+    <pre>
+    
+pt2_14: 2019-08-06 23:42:37,242-INFO-test_audit.py-audit-26[日志信息]:执行第14条用例,用例标题是:标的状态为审核中，状态码为7
+响应的结果:{'msg': '不允许直接更新项目到还款中状态，请执行生成回款计划', 'status': 0, 'data': None, 'code': '20210'}
+2019-08-06 23:42:37,335-ERROR-test_audit.py-audit-34[日志信息]:第14条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_15' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_15_标的状态为二审_初审中__状态码为1: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_15' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_15'>通过</button>
+    <div id='div_pt2_15' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_15' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_15'>通过</button>
+    <div id='div_pt2_15' class="collapse in" align="left">
+    <pre>
+    
+pt2_15: 2019-08-06 23:42:37,335-INFO-test_audit.py-audit-26[日志信息]:执行第15条用例,用例标题是:标的状态为二审(初审中)，状态码为1
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为审核中状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:37,444-ERROR-test_audit.py-audit-34[日志信息]:第15条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_16' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_16_标的状态为二审_初审中__状态码为3: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_16' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_16'>通过</button>
+    <div id='div_pt2_16' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_16' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_16'>通过</button>
+    <div id='div_pt2_16' class="collapse in" align="left">
+    <pre>
+    
+pt2_16: 2019-08-06 23:42:37,444-INFO-test_audit.py-audit-26[日志信息]:执行第16条用例,用例标题是:标的状态为二审(初审中)，状态码为3
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为三审(复审中)状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:37,554-ERROR-test_audit.py-audit-34[日志信息]:第16条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_17' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_17_标的状态为二审_初审中__状态码为4: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_17' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_17'>通过</button>
+    <div id='div_pt2_17' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_17' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_17'>通过</button>
+    <div id='div_pt2_17' class="collapse in" align="left">
+    <pre>
+    
+pt2_17: 2019-08-06 23:42:37,554-INFO-test_audit.py-audit-26[日志信息]:执行第17条用例,用例标题是:标的状态为二审(初审中)，状态码为4
+响应的结果:{'msg': '更新状态成功：竞标开始，当前标为竞标中状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:37,694-ERROR-test_audit.py-audit-34[日志信息]:第17条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_18' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_18_标的状态为二审_初审中__状态码为5: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_18' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_18'>通过</button>
+    <div id='div_pt2_18' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_18' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_18'>通过</button>
+    <div id='div_pt2_18' class="collapse in" align="left">
+    <pre>
+    
+pt2_18: 2019-08-06 23:42:37,694-INFO-test_audit.py-audit-26[日志信息]:执行第18条用例,用例标题是:标的状态为二审(初审中)，状态码为5
+响应的结果:{'msg': '更新状态成功：当前标为核保审批状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:37,803-ERROR-test_audit.py-audit-34[日志信息]:第18条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_19' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_19_标的状态为二审_初审中__状态码为6: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_19' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_19'>通过</button>
+    <div id='div_pt2_19' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_19' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_19'>通过</button>
+    <div id='div_pt2_19' class="collapse in" align="left">
+    <pre>
+    
+pt2_19: 2019-08-06 23:42:37,803-INFO-test_audit.py-audit-26[日志信息]:执行第19条用例,用例标题是:标的状态为二审(初审中)，状态码为6
+响应的结果:{'msg': '更新状态成功：当前标为平台终审状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:37,912-ERROR-test_audit.py-audit-34[日志信息]:第19条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_20' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_20_标的状态为二审_初审中__状态码为7: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_20' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_20'>通过</button>
+    <div id='div_pt2_20' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_20' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_20'>通过</button>
+    <div id='div_pt2_20' class="collapse in" align="left">
+    <pre>
+    
+pt2_20: 2019-08-06 23:42:37,912-INFO-test_audit.py-audit-26[日志信息]:执行第20条用例,用例标题是:标的状态为二审(初审中)，状态码为7
+响应的结果:{'msg': '不允许直接更新项目到还款中状态，请执行生成回款计划', 'status': 0, 'data': None, 'code': '20210'}
+2019-08-06 23:42:38,022-ERROR-test_audit.py-audit-34[日志信息]:第20条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_21' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_21_标的状态为三审_复审中__状态码为1: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_21' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_21'>通过</button>
+    <div id='div_pt2_21' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_21' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_21'>通过</button>
+    <div id='div_pt2_21' class="collapse in" align="left">
+    <pre>
+    
+pt2_21: 2019-08-06 23:42:38,022-INFO-test_audit.py-audit-26[日志信息]:执行第21条用例,用例标题是:标的状态为三审(复审中)，状态码为1
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为审核中状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:38,115-ERROR-test_audit.py-audit-34[日志信息]:第21条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_22' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_22_标的状态为三审_复审中__状态码为2: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_22' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_22'>通过</button>
+    <div id='div_pt2_22' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_22' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_22'>通过</button>
+    <div id='div_pt2_22' class="collapse in" align="left">
+    <pre>
+    
+pt2_22: 2019-08-06 23:42:38,115-INFO-test_audit.py-audit-26[日志信息]:执行第22条用例,用例标题是:标的状态为三审(复审中)，状态码为2
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为二审(初审中)状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:38,224-ERROR-test_audit.py-audit-34[日志信息]:第22条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_23' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_23_标的状态为三审_复审中__状态码为4: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_23' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_23'>通过</button>
+    <div id='div_pt2_23' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_23' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_23'>通过</button>
+    <div id='div_pt2_23' class="collapse in" align="left">
+    <pre>
+    
+pt2_23: 2019-08-06 23:42:38,224-INFO-test_audit.py-audit-26[日志信息]:执行第23条用例,用例标题是:标的状态为三审(复审中)，状态码为4
+响应的结果:{'msg': '更新状态成功：竞标开始，当前标为竞标中状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:38,334-ERROR-test_audit.py-audit-34[日志信息]:第23条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_24' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_24_标的状态为三审_复审中__状态码为5: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_24' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_24'>通过</button>
+    <div id='div_pt2_24' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_24' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_24'>通过</button>
+    <div id='div_pt2_24' class="collapse in" align="left">
+    <pre>
+    
+pt2_24: 2019-08-06 23:42:38,334-INFO-test_audit.py-audit-26[日志信息]:执行第24条用例,用例标题是:标的状态为三审(复审中)，状态码为5
+响应的结果:{'msg': '更新状态成功：当前标为核保审批状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:38,427-ERROR-test_audit.py-audit-34[日志信息]:第24条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_25' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_25_标的状态为三审_复审中__状态码为6: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_25' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_25'>通过</button>
+    <div id='div_pt2_25' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_25' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_25'>通过</button>
+    <div id='div_pt2_25' class="collapse in" align="left">
+    <pre>
+    
+pt2_25: 2019-08-06 23:42:38,427-INFO-test_audit.py-audit-26[日志信息]:执行第25条用例,用例标题是:标的状态为三审(复审中)，状态码为6
+响应的结果:{'msg': '更新状态成功：当前标为平台终审状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:38,583-ERROR-test_audit.py-audit-34[日志信息]:第25条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_26' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_26_标的状态为三审_复审中__状态码为7: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_26' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_26'>通过</button>
+    <div id='div_pt2_26' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_26' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_26'>通过</button>
+    <div id='div_pt2_26' class="collapse in" align="left">
+    <pre>
+    
+pt2_26: 2019-08-06 23:42:38,583-INFO-test_audit.py-audit-26[日志信息]:执行第26条用例,用例标题是:标的状态为三审(复审中)，状态码为7
+响应的结果:{'msg': '不允许直接更新项目到还款中状态，请执行生成回款计划', 'status': 0, 'data': None, 'code': '20210'}
+2019-08-06 23:42:38,677-ERROR-test_audit.py-audit-34[日志信息]:第26条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_27' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_27_标的状态为竞标中_状态码为1: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_27' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_27'>通过</button>
+    <div id='div_pt2_27' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_27' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_27'>通过</button>
+    <div id='div_pt2_27' class="collapse in" align="left">
+    <pre>
+    
+pt2_27: 2019-08-06 23:42:38,677-INFO-test_audit.py-audit-26[日志信息]:执行第27条用例,用例标题是:标的状态为竞标中，状态码为1
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为审核中状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:38,786-ERROR-test_audit.py-audit-34[日志信息]:第27条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_28' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_28_标的状态为竞标中_状态码为2: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_28' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_28'>通过</button>
+    <div id='div_pt2_28' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_28' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_28'>通过</button>
+    <div id='div_pt2_28' class="collapse in" align="left">
+    <pre>
+    
+pt2_28: 2019-08-06 23:42:38,786-INFO-test_audit.py-audit-26[日志信息]:执行第28条用例,用例标题是:标的状态为竞标中，状态码为2
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为二审(初审中)状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:38,895-ERROR-test_audit.py-audit-34[日志信息]:第28条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_29' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_29_标的状态为竞标中_状态码为3: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_29' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_29'>通过</button>
+    <div id='div_pt2_29' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_29' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_29'>通过</button>
+    <div id='div_pt2_29' class="collapse in" align="left">
+    <pre>
+    
+pt2_29: 2019-08-06 23:42:38,895-INFO-test_audit.py-audit-26[日志信息]:执行第29条用例,用例标题是:标的状态为竞标中，状态码为3
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为三审(复审中)状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:38,989-ERROR-test_audit.py-audit-34[日志信息]:第29条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_30' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_30_标的状态为竞标中_状态码为5: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_30' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_30'>通过</button>
+    <div id='div_pt2_30' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_30' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_30'>通过</button>
+    <div id='div_pt2_30' class="collapse in" align="left">
+    <pre>
+    
+pt2_30: 2019-08-06 23:42:38,989-INFO-test_audit.py-audit-26[日志信息]:执行第30条用例,用例标题是:标的状态为竞标中，状态码为5
+响应的结果:{'msg': '更新状态成功：当前标为核保审批状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:39,098-ERROR-test_audit.py-audit-34[日志信息]:第30条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_31' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_31_标的状态为竞标中_状态码为6: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_31' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_31'>通过</button>
+    <div id='div_pt2_31' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_31' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_31'>通过</button>
+    <div id='div_pt2_31' class="collapse in" align="left">
+    <pre>
+    
+pt2_31: 2019-08-06 23:42:39,098-INFO-test_audit.py-audit-26[日志信息]:执行第31条用例,用例标题是:标的状态为竞标中，状态码为6
+响应的结果:{'msg': '更新状态成功：当前标为平台终审状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:39,192-ERROR-test_audit.py-audit-34[日志信息]:第31条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_32' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_32_标的状态为竞标中_状态码为7: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_32' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_32'>通过</button>
+    <div id='div_pt2_32' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_32' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_32'>通过</button>
+    <div id='div_pt2_32' class="collapse in" align="left">
+    <pre>
+    
+pt2_32: 2019-08-06 23:42:39,192-INFO-test_audit.py-audit-26[日志信息]:执行第32条用例,用例标题是:标的状态为竞标中，状态码为7
+响应的结果:{'msg': '不允许直接更新项目到还款中状态，请执行生成回款计划', 'status': 0, 'data': None, 'code': '20210'}
+2019-08-06 23:42:39,285-ERROR-test_audit.py-audit-34[日志信息]:第32条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_33' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_33_标的状态为核保审批_状态码为1: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_33' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_33'>通过</button>
+    <div id='div_pt2_33' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_33' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_33'>通过</button>
+    <div id='div_pt2_33' class="collapse in" align="left">
+    <pre>
+    
+pt2_33: 2019-08-06 23:42:39,285-INFO-test_audit.py-audit-26[日志信息]:执行第33条用例,用例标题是:标的状态为核保审批，状态码为1
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为审核中状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:39,394-ERROR-test_audit.py-audit-34[日志信息]:第33条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_34' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_34_标的状态为核保审批_状态码为2: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_34' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_34'>通过</button>
+    <div id='div_pt2_34' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_34' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_34'>通过</button>
+    <div id='div_pt2_34' class="collapse in" align="left">
+    <pre>
+    
+pt2_34: 2019-08-06 23:42:39,394-INFO-test_audit.py-audit-26[日志信息]:执行第34条用例,用例标题是:标的状态为核保审批，状态码为2
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为二审(初审中)状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:39,488-ERROR-test_audit.py-audit-34[日志信息]:第34条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_35' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_35_标的状态为核保审批_状态码为3: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_35' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_35'>通过</button>
+    <div id='div_pt2_35' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_35' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_35'>通过</button>
+    <div id='div_pt2_35' class="collapse in" align="left">
+    <pre>
+    
+pt2_35: 2019-08-06 23:42:39,488-INFO-test_audit.py-audit-26[日志信息]:执行第35条用例,用例标题是:标的状态为核保审批，状态码为3
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为三审(复审中)状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:39,675-ERROR-test_audit.py-audit-34[日志信息]:第35条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_36' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_36_标的状态为核保审批_状态码为4: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_36' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_36'>通过</button>
+    <div id='div_pt2_36' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_36' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_36'>通过</button>
+    <div id='div_pt2_36' class="collapse in" align="left">
+    <pre>
+    
+pt2_36: 2019-08-06 23:42:39,675-INFO-test_audit.py-audit-26[日志信息]:执行第36条用例,用例标题是:标的状态为核保审批，状态码为4
+响应的结果:{'msg': '更新状态成功：竞标开始，当前标为竞标中状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:39,769-ERROR-test_audit.py-audit-34[日志信息]:第36条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_37' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_37_标的状态为核保审批_状态码为6: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_37' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_37'>通过</button>
+    <div id='div_pt2_37' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_37' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_37'>通过</button>
+    <div id='div_pt2_37' class="collapse in" align="left">
+    <pre>
+    
+pt2_37: 2019-08-06 23:42:39,769-INFO-test_audit.py-audit-26[日志信息]:执行第37条用例,用例标题是:标的状态为核保审批，状态码为6
+响应的结果:{'msg': '更新状态成功：当前标为平台终审状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:39,862-ERROR-test_audit.py-audit-34[日志信息]:第37条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_38' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_38_标的状态为核保审批_状态码为7: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_38' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_38'>通过</button>
+    <div id='div_pt2_38' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_38' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_38'>通过</button>
+    <div id='div_pt2_38' class="collapse in" align="left">
+    <pre>
+    
+pt2_38: 2019-08-06 23:42:39,862-INFO-test_audit.py-audit-26[日志信息]:执行第38条用例,用例标题是:标的状态为核保审批，状态码为7
+响应的结果:{'msg': '不允许直接更新项目到还款中状态，请执行生成回款计划', 'status': 0, 'data': None, 'code': '20210'}
+2019-08-06 23:42:39,972-ERROR-test_audit.py-audit-34[日志信息]:第38条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_39' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_39_标的状态为平台终审_状态码为1: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_39' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_39'>通过</button>
+    <div id='div_pt2_39' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_39' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_39'>通过</button>
+    <div id='div_pt2_39' class="collapse in" align="left">
+    <pre>
+    
+pt2_39: 2019-08-06 23:42:39,972-INFO-test_audit.py-audit-26[日志信息]:执行第39条用例,用例标题是:标的状态为平台终审，状态码为1
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为审核中状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:40,081-ERROR-test_audit.py-audit-34[日志信息]:第39条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_40' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_40_标的状态为平台终审_状态码为2: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_40' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_40'>通过</button>
+    <div id='div_pt2_40' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_40' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_40'>通过</button>
+    <div id='div_pt2_40' class="collapse in" align="left">
+    <pre>
+    
+pt2_40: 2019-08-06 23:42:40,081-INFO-test_audit.py-audit-26[日志信息]:执行第40条用例,用例标题是:标的状态为平台终审，状态码为2
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为二审(初审中)状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:40,190-ERROR-test_audit.py-audit-34[日志信息]:第40条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_41' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_41_标的状态为平台终审_状态码为3: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_41' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_41'>通过</button>
+    <div id='div_pt2_41' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_41' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_41'>通过</button>
+    <div id='div_pt2_41' class="collapse in" align="left">
+    <pre>
+    
+pt2_41: 2019-08-06 23:42:40,190-INFO-test_audit.py-audit-26[日志信息]:执行第41条用例,用例标题是:标的状态为平台终审，状态码为3
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为三审(复审中)状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:40,315-ERROR-test_audit.py-audit-34[日志信息]:第41条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_42' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_42_标的状态为平台终审_状态码为4: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_42' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_42'>通过</button>
+    <div id='div_pt2_42' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_42' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_42'>通过</button>
+    <div id='div_pt2_42' class="collapse in" align="left">
+    <pre>
+    
+pt2_42: 2019-08-06 23:42:40,315-INFO-test_audit.py-audit-26[日志信息]:执行第42条用例,用例标题是:标的状态为平台终审，状态码为4
+响应的结果:{'msg': '更新状态成功：竞标开始，当前标为竞标中状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:40,408-ERROR-test_audit.py-audit-34[日志信息]:第42条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_43' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_43_标的状态为平台终审_状态码为5: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_43' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_43'>通过</button>
+    <div id='div_pt2_43' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_43' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_43'>通过</button>
+    <div id='div_pt2_43' class="collapse in" align="left">
+    <pre>
+    
+pt2_43: 2019-08-06 23:42:40,408-INFO-test_audit.py-audit-26[日志信息]:执行第43条用例,用例标题是:标的状态为平台终审，状态码为5
+响应的结果:{'msg': '更新状态成功：当前标为核保审批状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:40,518-ERROR-test_audit.py-audit-34[日志信息]:第43条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_44' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_44_标的状态为平台终审_状态码为7: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_44' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_44'>通过</button>
+    <div id='div_pt2_44' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_44' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_44'>通过</button>
+    <div id='div_pt2_44' class="collapse in" align="left">
+    <pre>
+    
+pt2_44: 2019-08-06 23:42:40,518-INFO-test_audit.py-audit-26[日志信息]:执行第44条用例,用例标题是:标的状态为平台终审，状态码为7
+响应的结果:{'msg': '不允许直接更新项目到还款中状态，请执行生成回款计划', 'status': 0, 'data': None, 'code': '20210'}
+2019-08-06 23:42:40,627-ERROR-test_audit.py-audit-34[日志信息]:第44条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_45' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_45_把标的状态改为平台终审_状态码为6: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_45' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_45'>通过</button>
+    <div id='div_pt2_45' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_45' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_45'>通过</button>
+    <div id='div_pt2_45' class="collapse in" align="left">
+    <pre>
+    
+pt2_45: 2019-08-06 23:42:40,627-INFO-test_audit.py-audit-26[日志信息]:执行第45条用例,用例标题是:把标的状态改为平台终审，状态码为6
+响应的结果:{'msg': '更新状态成功：当前标为平台终审状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:40,720-ERROR-test_audit.py-audit-34[日志信息]:第45条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_46' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_46_标的状态为平台终审_状态码为6: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_46' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_46'>通过</button>
+    <div id='div_pt2_46' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_46' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_46'>通过</button>
+    <div id='div_pt2_46' class="collapse in" align="left">
+    <pre>
+    
+pt2_46: 2019-08-06 23:42:40,720-INFO-test_audit.py-audit-26[日志信息]:执行第46条用例,用例标题是:标的状态为平台终审，状态码为6
+响应的结果:{'msg': '修改失败，当前标已经是该状态', 'status': 0, 'data': None, 'code': '20207'}
+2019-08-06 23:42:40,830-ERROR-test_audit.py-audit-34[日志信息]:第46条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_47' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_47_把标的状态改为核保审批_状态码为5: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_47' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_47'>通过</button>
+    <div id='div_pt2_47' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_47' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_47'>通过</button>
+    <div id='div_pt2_47' class="collapse in" align="left">
+    <pre>
+    
+pt2_47: 2019-08-06 23:42:40,830-INFO-test_audit.py-audit-26[日志信息]:执行第47条用例,用例标题是:把标的状态改为核保审批，状态码为5
+响应的结果:{'msg': '更新状态成功：当前标为核保审批状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:40,939-ERROR-test_audit.py-audit-34[日志信息]:第47条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_48' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_48_标的状态为核保审批_状态码为5: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_48' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_48'>通过</button>
+    <div id='div_pt2_48' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_48' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_48'>通过</button>
+    <div id='div_pt2_48' class="collapse in" align="left">
+    <pre>
+    
+pt2_48: 2019-08-06 23:42:40,939-INFO-test_audit.py-audit-26[日志信息]:执行第48条用例,用例标题是:标的状态为核保审批，状态码为5
+响应的结果:{'msg': '修改失败，当前标已经是该状态', 'status': 0, 'data': None, 'code': '20207'}
+2019-08-06 23:42:41,032-ERROR-test_audit.py-audit-34[日志信息]:第48条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_49' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_49_把标的状态改为竞标中_状态码为4: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_49' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_49'>通过</button>
+    <div id='div_pt2_49' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_49' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_49'>通过</button>
+    <div id='div_pt2_49' class="collapse in" align="left">
+    <pre>
+    
+pt2_49: 2019-08-06 23:42:41,032-INFO-test_audit.py-audit-26[日志信息]:执行第49条用例,用例标题是:把标的状态改为竞标中，状态码为4
+响应的结果:{'msg': '更新状态成功：竞标开始，当前标为竞标中状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:41,142-ERROR-test_audit.py-audit-34[日志信息]:第49条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_50' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_50_标的状态为竞标中_状态码为4: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_50' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_50'>通过</button>
+    <div id='div_pt2_50' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_50' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_50'>通过</button>
+    <div id='div_pt2_50' class="collapse in" align="left">
+    <pre>
+    
+pt2_50: 2019-08-06 23:42:41,142-INFO-test_audit.py-audit-26[日志信息]:执行第50条用例,用例标题是:标的状态为竞标中，状态码为4
+响应的结果:{'msg': '修改失败，当前标已经是该状态', 'status': 0, 'data': None, 'code': '20207'}
+2019-08-06 23:42:41,251-ERROR-test_audit.py-audit-34[日志信息]:第50条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_51' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_51_把标的状态改为三审_复审中__状态码为3: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_51' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_51'>通过</button>
+    <div id='div_pt2_51' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_51' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_51'>通过</button>
+    <div id='div_pt2_51' class="collapse in" align="left">
+    <pre>
+    
+pt2_51: 2019-08-06 23:42:41,251-INFO-test_audit.py-audit-26[日志信息]:执行第51条用例,用例标题是:把标的状态改为三审(复审中)，状态码为3
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为三审(复审中)状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:41,344-ERROR-test_audit.py-audit-34[日志信息]:第51条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_52' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_52_标的状态为三审_复审中__状态码为3: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_52' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_52'>通过</button>
+    <div id='div_pt2_52' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_52' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_52'>通过</button>
+    <div id='div_pt2_52' class="collapse in" align="left">
+    <pre>
+    
+pt2_52: 2019-08-06 23:42:41,344-INFO-test_audit.py-audit-26[日志信息]:执行第52条用例,用例标题是:标的状态为三审(复审中)，状态码为3
+响应的结果:{'msg': '修改失败，当前标已经是该状态', 'status': 0, 'data': None, 'code': '20207'}
+2019-08-06 23:42:41,454-ERROR-test_audit.py-audit-34[日志信息]:第52条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_53' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_53_把标的状态改为二审_初审中__状态码为2: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_53' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_53'>通过</button>
+    <div id='div_pt2_53' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_53' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_53'>通过</button>
+    <div id='div_pt2_53' class="collapse in" align="left">
+    <pre>
+    
+pt2_53: 2019-08-06 23:42:41,454-INFO-test_audit.py-audit-26[日志信息]:执行第53条用例,用例标题是:把标的状态改为二审(初审中)，状态码为2
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为二审(初审中)状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:41,547-ERROR-test_audit.py-audit-34[日志信息]:第53条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_54' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_54_标的状态为二审_初审中__状态码为2: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_54' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_54'>通过</button>
+    <div id='div_pt2_54' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_54' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_54'>通过</button>
+    <div id='div_pt2_54' class="collapse in" align="left">
+    <pre>
+    
+pt2_54: 2019-08-06 23:42:41,547-INFO-test_audit.py-audit-26[日志信息]:执行第54条用例,用例标题是:标的状态为二审(初审中)，状态码为2
+响应的结果:{'msg': '修改失败，当前标已经是该状态', 'status': 0, 'data': None, 'code': '20207'}
+2019-08-06 23:42:41,625-ERROR-test_audit.py-audit-34[日志信息]:第54条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_55' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_55_把标的状态改为审核中_状态码为1: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_55' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_55'>通过</button>
+    <div id='div_pt2_55' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_55' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_55'>通过</button>
+    <div id='div_pt2_55' class="collapse in" align="left">
+    <pre>
+    
+pt2_55: 2019-08-06 23:42:41,641-INFO-test_audit.py-audit-26[日志信息]:执行第55条用例,用例标题是:把标的状态改为审核中，状态码为1
+响应的结果:{'msg': '更新状态成功：审核通过，当前标为审核中状态', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:41,766-ERROR-test_audit.py-audit-34[日志信息]:第55条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt2_56' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_audit_56_标的状态为审核中_状态码为1: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt2_56' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt2_56'>通过</button>
+    <div id='div_pt2_56' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt2_56' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt2_56'>通过</button>
+    <div id='div_pt2_56' class="collapse in" align="left">
+    <pre>
+    
+pt2_56: 2019-08-06 23:42:41,766-INFO-test_audit.py-audit-26[日志信息]:执行第56条用例,用例标题是:标的状态为审核中，状态码为1
+响应的结果:{'msg': '修改失败，当前标已经是该状态', 'status': 0, 'data': None, 'code': '20207'}
+2019-08-06 23:42:41,890-ERROR-test_audit.py-audit-34[日志信息]:第56条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='passClass warning'>
+    <td>test_login.LoginTest</td>
+    <td class="text-center">5</td>
+    <td class="text-center">5</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c3',5)" class="detail" id='c3'>详细</a></td>
+</tr>
+
+<tr id='pt3_1' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_1_输入正确的手机号_密码: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_1'>通过</button>
+    <div id='div_pt3_1' class="collapse in" align="left">
+    <pre>
+    
+pt3_1: 2019-08-06 23:42:41,890-INFO-test_login.py-login-26[日志信息]:正在执行1条用例,用例标题:输入正确的手机号,密码
+请求的url: http://test.lemonban.com/futureloan/mvc/api/member/login?pwd=123456&amp;mobilephone=13707790001
+响应的结果: {'msg': '登录成功', 'status': 1, 'data': None, 'code': '10001'}
+2019-08-06 23:42:42,015-ERROR-test_login.py-login-35[日志信息]:第1条用例执行结果:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_2_输入错误的手机号_正确的密码: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_2'>通过</button>
+    <div id='div_pt3_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_2'>通过</button>
+    <div id='div_pt3_2' class="collapse in" align="left">
+    <pre>
+    
+pt3_2: 2019-08-06 23:42:42,015-INFO-test_login.py-login-26[日志信息]:正在执行2条用例,用例标题:输入错误的手机号，正确的密码
+请求的url: http://test.lemonban.com/futureloan/mvc/api/member/login?pwd=123456&amp;mobilephone=13712341000
+响应的结果: {'msg': '用户名或密码错误', 'status': 0, 'data': None, 'code': '20111'}
+2019-08-06 23:42:42,140-ERROR-test_login.py-login-35[日志信息]:第2条用例执行结果:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_3_输入正确的手机号_错误的密码: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_3'>通过</button>
+    <div id='div_pt3_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_3'>通过</button>
+    <div id='div_pt3_3' class="collapse in" align="left">
+    <pre>
+    
+pt3_3: 2019-08-06 23:42:42,140-INFO-test_login.py-login-26[日志信息]:正在执行3条用例,用例标题:输入正确的手机号，错误的密码
+请求的url: http://test.lemonban.com/futureloan/mvc/api/member/login?pwd=123457&amp;mobilephone=13707791001
+响应的结果: {'msg': '用户名或密码错误', 'status': 0, 'data': None, 'code': '20111'}
+2019-08-06 23:42:42,249-ERROR-test_login.py-login-35[日志信息]:第3条用例执行结果:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_4_只输入密码_不输入手机号: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_4'>通过</button>
+    <div id='div_pt3_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_4'>通过</button>
+    <div id='div_pt3_4' class="collapse in" align="left">
+    <pre>
+    
+pt3_4: 2019-08-06 23:42:42,249-INFO-test_login.py-login-26[日志信息]:正在执行4条用例,用例标题:只输入密码，不输入手机号
+请求的url: http://test.lemonban.com/futureloan/mvc/api/member/login
+响应的结果: {'msg': '手机号不能为空', 'status': 0, 'data': None, 'code': '20103'}
+2019-08-06 23:42:42,343-ERROR-test_login.py-login-35[日志信息]:第4条用例执行结果:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt3_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_login_5_只输入手机号_不输入密码: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt3_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt3_5'>通过</button>
+    <div id='div_pt3_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt3_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt3_5'>通过</button>
+    <div id='div_pt3_5' class="collapse in" align="left">
+    <pre>
+    
+pt3_5: 2019-08-06 23:42:42,343-INFO-test_login.py-login-26[日志信息]:正在执行5条用例,用例标题:只输入手机号，不输入密码
+请求的url: http://test.lemonban.com/futureloan/mvc/api/member/login
+响应的结果: {'msg': '密码不能为空', 'status': 0, 'data': None, 'code': '20103'}
+2019-08-06 23:42:42,436-ERROR-test_login.py-login-35[日志信息]:第5条用例执行结果:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='errorClass warning'>
+    <td>unittest.loader._FailedTest</td>
+    <td class="text-center">1</td>
+    <td class="text-center">0</td>
+    <td class="text-center">0</td>
+    <td class="text-center">1</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c4',1)" class="detail" id='c4'>详细</a></td>
+</tr>
+
+<tr id='ft4_1' class='none'>
+    <td class='errorCase'><div class='testcase'>test_recharge</div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft4_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft4_1'>错误</button>
+    <div id='div_ft4_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft4_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft4_1'>错误</button>
+    <div id='div_ft4_1' class="collapse in" align="left">
+    <pre>
+    
+ft4_1: Traceback (most recent call last):
+  File "C:\Python34\lib\unittest\case.py", line 58, in testPartExecutor
+    yield
+  File "C:\Python34\lib\unittest\case.py", line 580, in run
+    testMethod()
+  File "C:\Python34\lib\unittest\loader.py", line 33, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_recharge
+Traceback (most recent call last):
+  File "C:\Python34\lib\unittest\loader.py", line 323, in _find_tests
+    module = self._get_module_from_name(name)
+  File "C:\Python34\lib\unittest\loader.py", line 301, in _get_module_from_name
+    __import__(name)
+  File "F:\Pycharm_workspace\lemon_2\testcases\test_recharge.py", line 14, in &lt;module&gt;
+    setattr()
+TypeError: setattr expected 3 arguments, got 0
+
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr class='failClass warning'>
+    <td>test_register.RegisterTest</td>
+    <td class="text-center">10</td>
+    <td class="text-center">7</td>
+    <td class="text-center">3</td>
+    <td class="text-center">0</td>
+    <td class="text-center"><a href="javascript:showClassDetail('c5',10)" class="detail" id='c5'>详细</a></td>
+</tr>
+
+<tr id='ft5_1' class='none'>
+    <td class='failCase'><div class='testcase'>test_register_01_未注册的手机号码_6_18位的密码: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft5_1' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft5_1'>失败</button>
+    <div id='div_ft5_1' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft5_1' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft5_1'>失败</button>
+    <div id='div_ft5_1' class="collapse in" align="left">
+    <pre>
+    
+ft5_1: 2019-08-06 23:42:42,608-INFO-test_register.py-register-32[日志信息]:正在执行1条用例,用例标题是:未注册的手机号码,6-18位的密码
+2019-08-06 23:42:42,780-ERROR-test_register.py-register-52[日志信息]:第1条用例执行的结果是:FAIL
+Traceback (most recent call last):
+  File "F:\Pycharm_workspace\lemon_2\libext\ddtnew.py", line 138, in wrapper
+    return func(self, *args, **kwargs)
+  File "F:\Pycharm_workspace\lemon_2\testcases\test_register.py", line 53, in test_register
+    raise e
+  File "F:\Pycharm_workspace\lemon_2\testcases\test_register.py", line 45, in test_register
+    self.assertEqual(case["expectedresult"],res.text,"register error!!!")
+AssertionError: '{"status":1,"code":"10001","data":null,"msg":"注册成功"}' != '{"status":0,"code":"20110","data":null,"msg":"手机号码已被注册"}'
+- {"status":1,"code":"10001","data":null,"msg":"注册成功"}
+?           ^           ---                       --
++ {"status":0,"code":"20110","data":null,"msg":"手机号码已被注册"}
+?           ^         +++                       ++++++
+ : register error!!!
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_2' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_02_已注册的手机号码: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_2' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_2'>通过</button>
+    <div id='div_pt5_2' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_2' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_2'>通过</button>
+    <div id='div_pt5_2' class="collapse in" align="left">
+    <pre>
+    
+pt5_2: 2019-08-06 23:42:42,889-INFO-test_register.py-register-32[日志信息]:正在执行2条用例,用例标题是:已注册的手机号码
+2019-08-06 23:42:43,029-ERROR-test_register.py-register-48[日志信息]:第2条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_3' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_03_手机号格式输入错误_密码正确: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_3' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_3'>通过</button>
+    <div id='div_pt5_3' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_3' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_3'>通过</button>
+    <div id='div_pt5_3' class="collapse in" align="left">
+    <pre>
+    
+pt5_3: 2019-08-06 23:42:43,107-INFO-test_register.py-register-32[日志信息]:正在执行3条用例,用例标题是:手机号格式输入错误，密码正确
+2019-08-06 23:42:43,248-ERROR-test_register.py-register-48[日志信息]:第3条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_4' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_04_手机号格式正确_密码长度为5位: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_4' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_4'>通过</button>
+    <div id='div_pt5_4' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_4' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_4'>通过</button>
+    <div id='div_pt5_4' class="collapse in" align="left">
+    <pre>
+    
+pt5_4: 2019-08-06 23:42:43,326-INFO-test_register.py-register-32[日志信息]:正在执行4条用例,用例标题是:手机号格式正确，密码长度为5位
+2019-08-06 23:42:43,450-ERROR-test_register.py-register-48[日志信息]:第4条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_5' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_05_手机号格式正确_密码长度为19位: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_5' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_5'>通过</button>
+    <div id='div_pt5_5' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_5' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_5'>通过</button>
+    <div id='div_pt5_5' class="collapse in" align="left">
+    <pre>
+    
+pt5_5: 2019-08-06 23:42:43,560-INFO-test_register.py-register-32[日志信息]:正在执行5条用例,用例标题是:手机号格式正确，密码长度为19位
+2019-08-06 23:42:43,731-ERROR-test_register.py-register-48[日志信息]:第5条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_6' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_06_手机号_密码为空: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_6' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_6'>通过</button>
+    <div id='div_pt5_6' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_6' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_6'>通过</button>
+    <div id='div_pt5_6' class="collapse in" align="left">
+    <pre>
+    
+pt5_6: 2019-08-06 23:42:43,794-INFO-test_register.py-register-32[日志信息]:正在执行6条用例,用例标题是:手机号,密码为空
+2019-08-06 23:42:43,918-ERROR-test_register.py-register-48[日志信息]:第6条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_7' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_07_手机号为空: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_7' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_7'>通过</button>
+    <div id='div_pt5_7' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_7' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_7'>通过</button>
+    <div id='div_pt5_7' class="collapse in" align="left">
+    <pre>
+    
+pt5_7: 2019-08-06 23:42:43,981-INFO-test_register.py-register-32[日志信息]:正在执行7条用例,用例标题是:手机号为空
+2019-08-06 23:42:44,106-ERROR-test_register.py-register-48[日志信息]:第7条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='pt5_8' class='hiddenRow'>
+    <td class='passCase'><div class='testcase'>test_register_08_密码为空: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_pt5_8' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_pt5_8'>通过</button>
+    <div id='div_pt5_8' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_pt5_8' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_pt5_8'>通过</button>
+    <div id='div_pt5_8' class="collapse in" align="left">
+    <pre>
+    
+pt5_8: 2019-08-06 23:42:44,184-INFO-test_register.py-register-32[日志信息]:正在执行8条用例,用例标题是:密码为空
+2019-08-06 23:42:44,293-ERROR-test_register.py-register-48[日志信息]:第8条用例执行的结果是:PASS
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft5_9' class='none'>
+    <td class='failCase'><div class='testcase'>test_register_09_未注册的手机号码_6_18位的密码_注册名为_小陈陈: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft5_9' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft5_9'>失败</button>
+    <div id='div_ft5_9' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft5_9' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft5_9'>失败</button>
+    <div id='div_ft5_9' class="collapse in" align="left">
+    <pre>
+    
+ft5_9: 2019-08-06 23:42:44,355-INFO-test_register.py-register-32[日志信息]:正在执行9条用例,用例标题是:未注册的手机号码,6-18位的密码,注册名为：小陈陈
+2019-08-06 23:42:44,464-ERROR-test_register.py-register-52[日志信息]:第9条用例执行的结果是:FAIL
+Traceback (most recent call last):
+  File "F:\Pycharm_workspace\lemon_2\libext\ddtnew.py", line 138, in wrapper
+    return func(self, *args, **kwargs)
+  File "F:\Pycharm_workspace\lemon_2\testcases\test_register.py", line 53, in test_register
+    raise e
+  File "F:\Pycharm_workspace\lemon_2\testcases\test_register.py", line 45, in test_register
+    self.assertEqual(case["expectedresult"],res.text,"register error!!!")
+AssertionError: '{"status":1,"code":"10001","data":null,"msg":"注册成功"}' != '{"status":0,"code":"20110","data":null,"msg":"手机号码已被注册"}'
+- {"status":1,"code":"10001","data":null,"msg":"注册成功"}
+?           ^           ---                       --
++ {"status":0,"code":"20110","data":null,"msg":"手机号码已被注册"}
+?           ^         +++                       ++++++
+ : register error!!!
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='ft5_10' class='none'>
+    <td class='failCase'><div class='testcase'>test_register_10_未注册的手机号码_6_18位的密码_注册名再次为_小陈陈: </div></td>
+    <td colspan='5' align='center'>
+    <!--默认收起错误信息 -Findyou
+    <button id='btn_ft5_10' type="button"  class="btn btn-danger btn-xs collapsed" data-toggle="collapse" data-target='#div_ft5_10'>失败</button>
+    <div id='div_ft5_10' class="collapse">  -->
+    <!-- 默认展开错误信息 -Findyou -->
+    <button id='btn_ft5_10' type="button"  class="btn btn-danger btn-xs" data-toggle="collapse" data-target='#div_ft5_10'>失败</button>
+    <div id='div_ft5_10' class="collapse in" align="left">
+    <pre>
+    
+ft5_10: 2019-08-06 23:42:44,558-INFO-test_register.py-register-32[日志信息]:正在执行10条用例,用例标题是:未注册的手机号码,6-18位的密码,注册名再次为：小陈陈
+2019-08-06 23:42:44,730-ERROR-test_register.py-register-52[日志信息]:第10条用例执行的结果是:FAIL
+Traceback (most recent call last):
+  File "F:\Pycharm_workspace\lemon_2\libext\ddtnew.py", line 138, in wrapper
+    return func(self, *args, **kwargs)
+  File "F:\Pycharm_workspace\lemon_2\testcases\test_register.py", line 53, in test_register
+    raise e
+  File "F:\Pycharm_workspace\lemon_2\testcases\test_register.py", line 45, in test_register
+    self.assertEqual(case["expectedresult"],res.text,"register error!!!")
+AssertionError: '{"status":1,"code":"10001","data":null,"msg":"注册成功"}' != '{"status":0,"code":"20110","data":null,"msg":"手机号码已被注册"}'
+- {"status":1,"code":"10001","data":null,"msg":"注册成功"}
+?           ^           ---                       --
++ {"status":0,"code":"20110","data":null,"msg":"手机号码已被注册"}
+?           ^         +++                       ++++++
+ : register error!!!
+
+
+    </pre>
+    </div>
+    </td>
+</tr>
+
+<tr id='total_row' class="text-center active">
+    <td>总计</td>
+    <td>96</td>
+    <td>92</td>
+    <td>3</td>
+    <td>1</td>
+    <td>通过率：95.83%</td>
+</tr>
+</table>
+
+<div id='ending'>&nbsp;</div>
+    <div style=" position:fixed;right:50px; bottom:30px; width:20px; height:20px;cursor:pointer">
+    <a href="#"><span class="glyphicon glyphicon-eject" style = "font-size:30px;" aria-hidden="true">
+    </span></a></div>
+    
+</body>
+</html>
